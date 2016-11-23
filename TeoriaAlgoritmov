@@ -1,0 +1,60 @@
+program project1;
+
+{$mode objfpc}{$H+}
+
+uses
+  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  cthreads,
+  {$ENDIF}{$ENDIF}
+  Classes
+  { you can add units after this };
+type  TPtr=^TElem; 
+        TElem=record  
+        Data:real;   
+        Link:TPtr;   
+      end;
+var Head, Last:TPtr; 
+
+  n,i:integer;  
+  procedure Creating( var H,L:TPtr);  
+  var  Current:TPtr;  
+  begin
+    new(Current);  
+    Current^.Link:=nil; / 
+    writeln('Enter element');  
+    readln(Current^.Data);  
+    if H=nil  
+      then
+       begin
+         H:=Current;  
+         L:=Current;  
+       end
+    else
+       begin
+         L^.Link:=Current;  
+         L:=Current;  
+  end;
+    procedure Pechat(H:TPtr);  
+    begin
+      while H<>nil do   
+    begin
+      writeln(H^.Data:-7:3);  
+      H:=H^.Link 
+      end;
+      end;
+
+
+
+begin
+  Head:=nil;  
+  Last:=nil;
+  writeln('enter number of elements');
+  readln(n);
+  for i:=1 to n do   
+    Creating(Head,Last);  
+  writeln;  
+  Pechat(Head);  
+  WriteLn(#13#10,'M = ',Multi(Head):-7:3);  
+  readln;  
+end.
+                          
